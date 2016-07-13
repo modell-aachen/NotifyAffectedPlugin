@@ -1,0 +1,20 @@
+%TMPL:DEF{"ModacMailFrom"}%%TMPL:P{"ModacNoReply"}%%TMPL:END%
+
+%TMPL:DEF{"ModacMailSubject"}%%MAKETEXT{"A linked topic has been updated"}%%TMPL:END%
+
+%TMPL:DEF{"ModacMailContents"}%
+%MAKETEXT{"A wiki topic has been updated. At least one topic in your responsibility has a reference to the updated topic. If necessary, check the correctness of your topics."}%
+
+%MAKETEXT{"Updated topic:"}%
+%TOPICTITLE{"%AffectedDependency%"}%
+%SCRIPTURL{view}%/%AffectedDependency%
+
+%MAKETEXT{"Relevant topics in your responsibility:"}%
+%FORMATLIST{"%AffectedWebTopicList%"
+  split="\x{2630}"
+  format="$percentTOPICTITLE{\"$1\"}$percent$n%SCRIPTURL{view}%/$1"
+  separator="$n"
+}%
+%TMPL:END%
+
+%TMPL:DEF{"ModacMailTo"}%%AffectedTopicResponsible%%TMPL:END%

@@ -1,0 +1,42 @@
+%META:TOPICPARENT{name="Plugins"}%
+<!--
+One line description, required for extensions repository catalog.
+   * Set SHORTDESCRIPTION = %$SHORTDESCRIPTION%
+-->
+---+!! Send notifications when topics change
+
+%SHORTDESCRIPTION%
+
+%TOC%
+
+...
+
+---++ Preferences
+
+---+++ Configure
+Set these settings in configure.
+| *Name of preference* | *Description* | *Default* |
+| ={Plugins}{NotifyAffectedPlugin}{Formfield}= | Set this to the name of the formfield with the responsible person. | =Responsible= |
+| ={Plugins}{NotifyAffectedPlugin}{Condition}= | Only send notifications, if this TML expands to true (=1= or =on=). | _always true_ |
+
+---+++ Topic/Web settings
+Set any of these settings as topic preference (not in %<nop>TEXT%), or as a preference on =WebPreferences= / =SitePrefernces=.
+| *Name of preference* | *Description* | *Default* |
+| NOTIFY_AFFECTED | If this setting is set to =1= or =on=, topics affected by changes to this topic will generate notifications. | =off= |
+| NOTIFY_ABOUT_DEPENDENCIES | If this setting is set to =1= or =on=, notifications will be generated, if topics affecting this topic are changed. | =off= |
+
+---++ Installation
+%$INSTALL_INSTRUCTIONS%
+
+---++ Info
+
+|  Author: | Modell Aachen !GmbH |
+|  Copyright: | 2016, Modell Aachen !GmbH, All Rights Reserved |
+|  License: | GPL ([[http://www.gnu.org/copyleft/gpl.html][GNU General Public License]]) |
+|  Dependencies: | MailTemplatesContrib |
+|  Version: | %$VERSION% |
+|  Release: | %$RELEASE% |
+|  Change&nbsp;History: | <!-- versions below in reverse order -->&nbsp; |
+|  1.0.0 (%$CREATEDATE%): | Initial version |
+|  Home: | http://modell-aachen.de |
+|  Support: | http://modell-aachen.de |
