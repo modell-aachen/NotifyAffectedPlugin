@@ -61,7 +61,6 @@ sub notifyTopicChange {
         $condition =~ s#\$topic#$topic#g;
         my $result = Foswiki::Func::expandCommonVariables($condition, $topic, $web);
 
-        Foswiki::Func::writeWarning("$condition -> $result");
         return unless Foswiki::Func::isTrue($result);
     }
 
