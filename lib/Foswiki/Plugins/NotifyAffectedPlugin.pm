@@ -68,7 +68,7 @@ sub notifyTopicChange {
     $changedTopics->{"$web.$topic"} = 1;
 }
 
-sub completePageHandler {
+sub finishPlugin {
     return unless $changedTopics;
 
     foreach my $changedTopic ( keys %$changedTopics ) {

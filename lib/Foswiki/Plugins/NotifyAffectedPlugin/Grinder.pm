@@ -27,11 +27,10 @@ use Foswiki::Plugins::SolrPlugin::Search;
         my ($dependencyWeb, $dependencyTopic) = Foswiki::Func::normalizeWebTopicName(undef, $data);
 
         my ($meta, undef) = Foswiki::Func::readTopic($dependencyWeb, $dependencyTopic);
-        my $dependencySetting = $meta->get('PREFERENCE', 'NOTIFY_AFFECTED');
-        if($dependencySetting) {
-            $dependencySetting = $dependencySetting->{value};
-        } else {
-            $dependencySetting = Foswiki::Func::getPreferencesValue('NOTIFY_AFFECTED', $dependencyWeb, $dependencyTopic);
+        my $dependencySetting = $meta->getPreference('NOTIFY_AFFECTED');
+        unless(defined $dependencySetting) {
+            $dependencySetting = Foswiki::Func::getPreferencesValue('NOTIFY_AFFECTED', $dependencyWeb);
+            $dependencySetting = Foswiki::Func::getPreferencesValue('NOTIFY_AFFECTED') unless defined $dependencySetting;
         }
 
         # Arguably this should be configurable on a web/topic level, maybe even
@@ -51,11 +50,10 @@ use Foswiki::Plugins::SolrPlugin::Search;
             $responsible = $responsible->{value};
             next unless $responsible;
 
-            my $affectedSetting = $affectedMeta->get('PREFERENCE', 'NOTIFY_ABOUT_DEPENDENCIES');
-            if($affectedSetting) {
-                $affectedSetting = $affectedSetting->{value};
-            } else {
-                $affectedSetting = Foswiki::Func::getPreferencesValue('NOTIFY_ABOUT_DEPENDENCIES', $web, $topic);
+            my $affectedSetting = $affectedMeta->getPreference('NOTIFY_ABOUT_DEPENDENCIES');
+            unless(defined $affectedSetting) {
+                $affectedSetting = Foswiki::Func::getPreferencesValue('NOTIFY_ABOUT_DEPENDENCIES', $web);
+                $affectedSetting = Foswiki::Func::getPreferencesValue('NOTIFY_ABOUT_DEPENDENCIES') unless defined $affectedSetting;
             }
 
             next if ((defined $affectedSetting) && (not Foswiki::Func::isTrue($affectedSetting)));
