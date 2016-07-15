@@ -1,6 +1,8 @@
 use strict;
 use warnings;
 
+use JSON;
+
 use Foswiki::Contrib::MailTemplatesContrib;
 use Foswiki::Plugins::SolrPlugin;
 use Foswiki::Plugins::SolrPlugin::Search;
@@ -16,15 +18,20 @@ use Foswiki::Plugins::SolrPlugin::Search;
     engine_part => sub {
         my ($session, $type, $data, $caches) = @_;
 
+        $data = decode_json($data);
+
+        my $webtopic = $data->{webtopic};
+        $webtopic =~ s#/#.#g; # we need dots for searching
+
         my $searcher = Foswiki::Plugins::SolrPlugin::getSearcher($session);
         my $affectedTopics = $searcher->handleSOLRSEARCH({
-            _DEFAULT => "outgoingWiki_lst:$data OR outgoing_AttachmentTopic_lst:$data",
+            _DEFAULT => "outgoingWiki_lst:$webtopic OR outgoing_AttachmentTopic_lst:$webtopic",
             format=>"\$webtopic",
             fields=>"webtopic",
             separator=>","
         });
 
-        my ($dependencyWeb, $dependencyTopic) = Foswiki::Func::normalizeWebTopicName(undef, $data);
+        my ($dependencyWeb, $dependencyTopic) = Foswiki::Func::normalizeWebTopicName(undef, $data->{webtopic});
 
         my ($meta, undef) = Foswiki::Func::readTopic($dependencyWeb, $dependencyTopic);
         my $dependencySetting = $meta->getPreference('NOTIFY_AFFECTED');
@@ -68,9 +75,9 @@ use Foswiki::Plugins::SolrPlugin::Search;
             $mails->{$responsible} .= "$web/$topic";
         }
 
-        $data =~ s#\.#/#g; # We use slashes all the way, because it makes generating links a bit easier.
+        $webtopic =~ s#\.#/#g; # we need slashes for links
         foreach my $responsible ( keys %$mails ) {
-            Foswiki::Contrib::MailTemplatesContrib::sendMail('affectedmail', { IncludeCurrentUser => 1 }, {AffectedTopicResponsible => $responsible, AffectedWebTopicList => $mails->{$responsible}, AffectedDependency => $data}, 1);
+            Foswiki::Contrib::MailTemplatesContrib::sendMail('affectedmail', { IncludeCurrentUser => 1 }, {AffectedTopicResponsible => $responsible, AffectedWebTopicList => $mails->{$responsible}, AffectedDependency => $webtopic, LANGUAGE => $data->{LANGUAGE}}, 1);
         }
     },
 };

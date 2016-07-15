@@ -8,6 +8,8 @@ use warnings;
 use Foswiki::Func    ();    # The plugins API
 use Foswiki::Plugins ();    # For the API version
 
+use JSON;
+
 our $VERSION = '1.0';
 our $RELEASE = '1.0';
 
@@ -74,8 +76,13 @@ sub notifyTopicChange {
 sub finishPlugin {
     return unless $changedTopics;
 
+    my $lang = $Foswiki::Plugins::SESSION->i18n->language();
     foreach my $changedTopic ( keys %$changedTopics ) {
-        Foswiki::Plugins::TaskDaemonPlugin::send($changedTopic, 'topic_changed', 'NotifyAffectedPlugin', 0);
+        my $json = encode_json({
+            webtopic => $changedTopic,
+            LANGUAGE => $lang
+        });
+        Foswiki::Plugins::TaskDaemonPlugin::send($json, 'topic_changed', 'NotifyAffectedPlugin', 0);
     }
 
     $changedTopics = undef;
