@@ -18,7 +18,7 @@ use Foswiki::Plugins::SolrPlugin::Search;
 
         my $searcher = Foswiki::Plugins::SolrPlugin::getSearcher($session);
         my $affectedTopics = $searcher->handleSOLRSEARCH({
-            _DEFAULT => "outgoing:$data OR outgoing_AttachmentTopic_lst:$data OR parent:$data",
+            _DEFAULT => "outgoingWiki_lst:$data OR outgoing_AttachmentTopic_lst:$data",
             format=>"\$webtopic",
             fields=>"webtopic",
             separator=>","
