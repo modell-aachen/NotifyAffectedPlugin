@@ -47,6 +47,12 @@ sub afterRenameHandler {
     notifyTopicChange($newWeb, $newTopic) if $newTopic;
 }
 
+sub afterUploadHandler {
+    my( $attrHashRef, $meta ) = @_;
+
+    notifyTopicChange($meta->web(), $meta->topic());
+}
+
 # Trigger the grinder for a topic
 # Parameters:
 #    * web,topic: the changed topic
