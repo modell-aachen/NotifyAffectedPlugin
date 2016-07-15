@@ -28,6 +28,34 @@ Set any of these settings as topic preference (not in %<nop>TEXT%), or as a pref
 ---++ Installation
 %$INSTALL_INSTRUCTIONS%
 
+---+++ Installation of system services
+
+To work, this extensions need a installed system service.
+Service files for systemd are provided in resources/NotifyAffectedPlugin in your Foswiki root directory.
+If you use this configuration, your daemon will run as a systemd instantiated service.
+
+
+Preliminaries:
+   * =$FOSWIKI_ROOT= Your Foswiki root directory
+   * =$INSTANCE= The name of the Foswiki instance. Even if you run only one Foswiki instance, you need to decide for one, e.g. =qwiki=.
+Installation instructions für Debian Linux.
+
+<pre>
+install -o root -g root $FOSWIKI_ROOT/resources/NotifyAffectedPlugin/systemd/config/notifyaffectedworker /etc/default/notifyaffectedworker-$INSTANCE
+install -o root -g root $FOSWIKI_ROOT/resources/NotifyAffectedPlugin/systemd/notifyaffectedworker@.service /etc/systemd/system/notifyaffectedworker@.service
+</pre>
+
+   * Edit =/etc/default/notifyaffectedworker-$INSTANCE= and change the Foswiki root directory path.
+   * Edit =/etc/systemd/system/notifyaffectedworker@.service= and change the User to your webserver user (the default works for Debian).
+
+Activate the service:
+
+<pre>
+systemctl daemon-reload
+systemctl enable notifyaffectedworker@$INSTANCE
+systemctl restart notifyaffectedworker@$INSTANCE
+</pre>
+
 ---++ Info
 
 |  Author: | Modell Aachen !GmbH |
