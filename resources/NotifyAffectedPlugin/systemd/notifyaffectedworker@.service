@@ -1,0 +1,13 @@
+[Unit]
+Description=Notifyaffectedworker for MATTDaemon
+After=network.target mattdaemon.service
+Requires=mattdaemon.service
+
+[Service]
+EnvironmentFile=/etc/default/notifyaffectedworker-%i
+User=www-data
+ExecStart=/usr/local/bin/mattworker
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

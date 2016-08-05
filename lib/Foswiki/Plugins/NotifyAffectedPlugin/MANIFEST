@@ -1,0 +1,10 @@
+!noci
+data/System/NotifyAffectedPlugin.txt 0644 Documentation page
+data/System/AffectedMailTemplate.txt 0644
+lib/Foswiki/Plugins/NotifyAffectedPlugin.pm 0444 Perl module
+lib/Foswiki/Plugins/NotifyAffectedPlugin/Config.spec 0444 Configuration
+lib/Foswiki/Plugins/NotifyAffectedPlugin/Grinder.pm 0444
+locale/NotifyAffectedPlugin/de.po 0644
+templates/affectedmail.tmpl 0644 Permissions
+resources/NotifyAffectedPlugin/systemd/config/notifyaffectedworker
+resources/NotifyAffectedPlugin/systemd/notifyaffectedworker@.service 0644
