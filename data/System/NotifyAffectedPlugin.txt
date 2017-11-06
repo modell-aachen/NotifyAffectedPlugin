@@ -17,7 +17,7 @@ One line description, required for extensions repository catalog.
 Set these settings in configure.
 | *Name of preference* | *Description* | *Default* |
 | ={Plugins}{NotifyAffectedPlugin}{Formfield}= | Set this to the name of the formfield with the responsible person. | =Responsible= |
-| ={Plugins}{NotifyAffectedPlugin}{Condition}= | Only send notifications, if this TML expands to true (=1= or =on=). | _always true_ |
+| ={Plugins}{NotifyAffectedPlugin}{Condition}= | Only send notifications, if this TML expands to true (=1= or =on=). | Only approved topics |
 
 ---+++ Topic/Web settings
 Set any of these settings as topic preference (not in %<nop>TEXT%), or as a preference on =WebPreferences= / =SitePrefernces=.

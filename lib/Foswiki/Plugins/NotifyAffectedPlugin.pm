@@ -65,7 +65,7 @@ sub notifyTopicChange {
 
     my $condition = $Foswiki::cfg{Plugins}{NotifyAffectedPlugin}{Condition};
     # XXX unfortunately I can not set this as standard in the Config.spec, because configure will mangle the escapes
-    $condition = '%IF{"$WORKFLOWMETA=\'DRAFT\' or $\'GETWORKFLOWROW{approved}\'" then="1"}%' unless (defined $condition && $condition ne '');
+    $condition = '%IF{"$\'GETWORKFLOWROW{approved}\'" then="1"}%' unless (defined $condition && $condition ne '');
     my $result = Foswiki::Func::expandCommonVariables($condition, $topic, $web);
     return unless Foswiki::Func::isTrue($result);
 
