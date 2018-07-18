@@ -77,10 +77,12 @@ sub finishPlugin {
     return unless $changedTopics;
 
     my $lang = $Foswiki::Plugins::SESSION->i18n->language();
+    my $currentUser = Foswiki::Func::getCanonicalUserID();
     foreach my $changedTopic ( keys %$changedTopics ) {
         my $json = encode_json({
             webtopic => $changedTopic,
-            LANGUAGE => $lang
+            LANGUAGE => $lang,
+            lastProcessor => $currentUser
         });
         Foswiki::Plugins::TaskDaemonPlugin::send($json, 'topic_changed', 'NotifyAffectedPlugin', 0);
     }
