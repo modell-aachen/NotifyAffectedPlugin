@@ -77,7 +77,7 @@ use Foswiki::Plugins::SolrPlugin::Search;
 
         $webtopic =~ s#\.#/#g; # we need slashes for links
         foreach my $responsible ( keys %$mails ) {
-            Foswiki::Contrib::MailTemplatesContrib::sendMail('affectedmail', { IncludeCurrentUser => 1 }, {AffectedTopicResponsible => $responsible, AffectedWebTopicList => $mails->{$responsible}, AffectedDependency => $webtopic, LANGUAGE => $data->{LANGUAGE}}, 1);
+            Foswiki::Contrib::MailTemplatesContrib::sendMail('affectedmail', { IncludeCurrentUser => 0 }, {AffectedTopicResponsible => $responsible, AffectedWebTopicList => $mails->{$responsible}, AffectedDependency => $webtopic, LANGUAGE => $data->{LANGUAGE}}, 1);
         }
     },
 };
