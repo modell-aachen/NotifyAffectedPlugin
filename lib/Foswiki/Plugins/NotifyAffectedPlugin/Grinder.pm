@@ -23,6 +23,8 @@ use Foswiki::Plugins::SolrPlugin::Search;
         my $webtopic = $data->{webtopic};
         $webtopic =~ s#/#.#g; # we need dots for searching
 
+        my $lastProcessor = $data->{lastProcessor};
+
         my $searcher = Foswiki::Plugins::SolrPlugin::getSearcher($session);
         my $affectedTopics = $searcher->handleSOLRSEARCH({
             _DEFAULT => "outgoingWiki_lst:$webtopic OR outgoing_AttachmentTopic_lst:$webtopic",
@@ -77,7 +79,7 @@ use Foswiki::Plugins::SolrPlugin::Search;
 
         $webtopic =~ s#\.#/#g; # we need slashes for links
         foreach my $responsible ( keys %$mails ) {
-            Foswiki::Contrib::MailTemplatesContrib::sendMail('affectedmail', { IncludeCurrentUser => 1 }, {AffectedTopicResponsible => $responsible, AffectedWebTopicList => $mails->{$responsible}, AffectedDependency => $webtopic, LANGUAGE => $data->{LANGUAGE}}, 1);
+            Foswiki::Contrib::MailTemplatesContrib::sendMail('affectedmail', { IncludeCurrentUser => 0 }, {AffectedTopicResponsible => $responsible, AffectedWebTopicList => $mails->{$responsible}, AffectedDependency => $webtopic, LANGUAGE => $data->{LANGUAGE}}, 1) unless $responsible eq $lastProcessor;
         }
     },
 };
